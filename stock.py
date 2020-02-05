@@ -2,9 +2,9 @@ from datetime import datetime
 import pandas_datareader.data as wb
 import pandas as pd
 
-start = datetime(1950, 10, 2)
-end = datetime(2021, 1, 1)
-#
+# start = datetime(1970, 1, 1)
+start = datetime(2019, 1, 1)
+end = datetime(2019, 2, 1)
 
 
 def saveStockCode():
@@ -15,11 +15,28 @@ def saveStockCode():
         df[['회사명', '종목코드']].to_csv(i+'.csv')
 
 
+def readStock():
+    data = pd.read_csv('kosdaqMkt.csv')
+    error = 0
+    success = 0
+    df = wb.DataReader('257370.KQ', 'yahoo', start, end)
+    print(df)
+    print(len(df))
+    # for name, code in zip(data['회사명'], data['종목코드']):
+    #     if len(str(code))<6 : code=(6-len(str(code)))*'0'+str(code)
+    #     code = str(code) + '.KQ'
+    #     print(code)
+    #     try:
+    #         df = wb.DataReader(code, 'yahoo', start, end)
+    #         success+=1
+    #         print(name, code, len(df))
+    #     except:
+    #         error +=1
+    #         print("error")
+    # print("total codes: ",success, "total error: ", error)
+        # df.to_csv(j+'csv')
+
+
 if __name__ == '__main__':
     # saveStockCode()
-    data = pd.read_csv('kosdaqMkt.csv')
-    for j,i in zip(data['회사명'],data['종목코드']):
-        name = str(i)+'.KS'
-        df = wb.DataReader('035420.KS', 'yahoo', start, end)
-        print(len(df))
-        # df.to_csv(j+'csv')
+    readStock()
