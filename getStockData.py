@@ -33,5 +33,17 @@ for page in range(1, int(end)):
 # df.dropna()를 이용해 결측값 있는 행 제거
 df = df.dropna()
 # 상위 5개 데이터 확인하기
-print(df)
+
+data = df[::-1]
+data['5일선'] = data['종가'].rolling(window=5).mean()
+data['8일선'] = data['종가'].rolling(window=8).mean()
+data['10일선'] = data['종가'].rolling(window=10).mean()
+data['30일선'] = data['종가'].rolling(window=30).mean()
+data['45일선'] = data['종가'].rolling(window=45).mean()
+data['60일선'] = data['종가'].rolling(window=60).mean()
+data['120일선'] = data['종가'].rolling(window=120).mean()
+
+print(data.to_csv('stocks/신라젠.csv'))
+data.to_csv('stocks/'+item_name+'.csv')
+print(data)
 
